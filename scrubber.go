@@ -1,4 +1,4 @@
-package jsonreturner
+package jsonscrubber
 
 import (
   "reflect"

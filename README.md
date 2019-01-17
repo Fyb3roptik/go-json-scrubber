@@ -4,18 +4,18 @@ This library is for parsing a struct before returning it in JSON format and scru
 ## Installation
 
 ```
-go get github.com/Fyb3roptik/json-returner
+go get github.com/Fyb3roptik/go-json-returner
 ```
 
 ## Usage
 
-``` golang
+```go
 jsonreturner.AddOnly(*interface{}, ...string)
 ```
 
 ## Example
 
-``` go
+```go
 type User struct {
 	FirstName         string      `json:"first_name"`
 	LastName          string      `json:"last_name"`
@@ -50,7 +50,7 @@ return c.RenderJSON(user)
 ```
 
 ## Output
-``` json
+```json
 {
 	"address": {
 		"city": "New York"

@@ -1,16 +1,16 @@
-# JSON Returner
+# JSON Scrubber
 This library is for parsing a struct before returning it in JSON format and scrubbing it dynamically of certain fields.
 
 ## Installation
 
 ```
-go get github.com/Fyb3roptik/go-json-returner
+go get github.com/Fyb3roptik/go-json-scrubber
 ```
 
 ## Usage
 
 ```go
-jsonreturner.AddOnly(*interface{}, ...string)
+jsonscrubber.AddOnly(*interface{}, ...string)
 ```
 
 ## Example
@@ -33,10 +33,10 @@ address := &Address{City: "New York", State: "NY"}
 u := &User{FirstName: "Foo", LastName: "Bar", address}
 
 // Initial model fields go here
-user := jsonreturner.AddOnly(u, "first_name", "address").(map[string]interface{})
+user := jsonscrubber.AddOnly(u, "first_name", "address").(map[string]interface{})
 
 // You can also do sub structs fields too
-user["address"] = jsonreturner.AddOnly(u.Address, "city")
+user["address"] = jsonscrubber.AddOnly(u.Address, "city")
 
 // Return the JSON
 b, err := json.MarshalIndent(user)

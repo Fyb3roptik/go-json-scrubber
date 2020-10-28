@@ -1,5 +1,5 @@
 # JSON Scrubber
-This library is for parsing a struct before returning it in JSON format and scrubbing it dynamically of certain fields.
+This library is for parsing a struct before returning it in JSON format and scrubbing it dynamically of certain fields. It supports unlimited fields and can filter them down.
 
 ## Installation
 

@@ -20,8 +20,10 @@ type Address struct {
 	Zip     string `json:"zip"`
 }
 
-func TestAddOnly(t *testing.T) {
-	user := &User{
+var user *User
+
+func init() {
+	user = &User{
 		FirstName: "Foo",
 		LastName:  "Bar",
 		Address: &Address{
@@ -29,11 +31,26 @@ func TestAddOnly(t *testing.T) {
 			State: "NY",
 		},
 	}
+}
 
+func TestAddOnly(t *testing.T) {
 	scrubbedUser := jsonscrubber.AddOnly(user, "first_name", "address").(map[string]interface{})
 	scrubbedUser["address"] = jsonscrubber.AddOnly(user.Address, "city")
 
 	expectedScrubbed := [][]string{{"last_name"}, {"address", "address"}, {"address", "state"}, {"address", "zip"}}
+
+	for _, path := range expectedScrubbed {
+		if fieldExists(scrubbedUser, path) {
+			t.Errorf("unexpected field found %q", strings.Join(path, "."))
+		}
+	}
+}
+
+func TestRemoveOnly(t *testing.T) {
+	scrubbedUser := jsonscrubber.RemoveOnly(user, "first_name").(map[string]interface{})
+	scrubbedUser["address"] = jsonscrubber.RemoveOnly(user.Address, "city")
+
+	expectedScrubbed := [][]string{{"first_name"}, {"address", "city"}}
 
 	for _, path := range expectedScrubbed {
 		if fieldExists(scrubbedUser, path) {

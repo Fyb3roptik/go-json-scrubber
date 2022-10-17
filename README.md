@@ -1,3 +1,7 @@
+<p align="center">
+<img alt="Logo Banner" src="https://repository-images.githubusercontent.com/156623891/051894fb-7427-4546-994e-17aed8df500d"/>
+</p>
+
 # JSON Scrubber
 This library is for parsing a struct before returning it in JSON format and scrubbing it dynamically of certain fields. It supports unlimited fields and can filter them down.
 

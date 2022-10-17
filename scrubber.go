@@ -1,17 +1,25 @@
 package jsonscrubber
 
 import (
-  "reflect"
+	"reflect"
 )
 
 func AddOnly(s interface{}, fields ...string) interface{} {
-  fs := fieldSet(fields...)
+	return filter(true, s, fields...)
+}
+
+func RemoveOnly(s interface{}, fields ...string) interface{} {
+	return filter(false, s, fields...)
+}
+
+func filter(keep bool, s interface{}, fields ...string) interface{} {
+	fs := fieldSet(fields...)
 	rv := reflect.Indirect(reflect.ValueOf(s))
 	out := make(map[string]interface{}, rv.NumField())
 	for i := 0; i < rv.NumField(); i++ {
 		field := rv.Type().Field(i)
 		jsonKey := field.Tag.Get("json")
-		if fs[jsonKey] {
+		if keep == fs[jsonKey] {
 			out[jsonKey] = rv.Field(i).Interface()
 		}
 	}

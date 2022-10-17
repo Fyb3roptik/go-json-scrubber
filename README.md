@@ -11,6 +11,7 @@ go get github.com/Fyb3roptik/go-json-scrubber
 
 ```go
 jsonscrubber.AddOnly(*interface{}, ...string)
+jsonscrubber.RemoveOnly(*interface{}, ...string)
 ```
 
 ## Example
@@ -35,8 +36,8 @@ u := &User{FirstName: "Foo", LastName: "Bar", address}
 // Initial model fields go here
 user := jsonscrubber.AddOnly(u, "first_name", "address").(map[string]interface{})
 
-// You can also do sub structs fields too
-user["address"] = jsonscrubber.AddOnly(u.Address, "city")
+// You can also do sub structs fields too, this time specifying fields to remove
+user["address"] = jsonscrubber.RemoveOnly(u.Address, "address", "state", "zip")
 
 // Return the JSON
 b, err := json.MarshalIndent(user)
@@ -58,7 +59,3 @@ return c.RenderJSON(user)
 	"first_name": "Foo"
 }
 ```
-
-## TODO
-
-* Add reverse of this. Return all but selected fields
